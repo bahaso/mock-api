@@ -30,7 +30,7 @@ class RouteMiddleware
 
                     if (isset($endpoints[$status_code])) {
                         $endpoint = $endpoints[$status_code][0];
-                        return response()->json($endpoint->response, $endpoint->status, ($endpoint->header ? $endpoint->header : []));
+                        return response()->json(json_decode($endpoint->response), $endpoint->status, ($endpoint->header ? $endpoint->header : []));
                     } else {
                         throw new NotFoundHttpException("The requested status-code for given URL is invalid");
                     }

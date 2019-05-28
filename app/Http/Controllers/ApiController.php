@@ -29,10 +29,16 @@ class ApiController extends Controller
         ])->first();
 
         if (! $endpoint) {
-            $endpoint = new Endpoint($request->all());
+            $endpoint = new Endpoint();
         }
-        else
-            $endpoint = $endpoint->fill($request->all());
+
+        $endpoint->url = $request->get('url');
+        $endpoint->accessibility = $request->get('accessibility');
+        $endpoint->status = $request->get('status');
+        $endpoint->method = $request->get('method');
+        $endpoint->name = $request->get('name');
+        $endpoint->success = $request->get('success');
+        $endpoint->response = json_encode($request->get('response'));
 
         $endpoint->save();
 
