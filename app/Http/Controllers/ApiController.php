@@ -39,6 +39,7 @@ class ApiController extends Controller
         $endpoint->name = $request->get('name');
         $endpoint->success = $request->get('success');
         $endpoint->response = json_encode($request->get('response'));
+        $endpoint->request = $request->get('request') ? $request->get('request') : null;
 
         $endpoint->save();
 
