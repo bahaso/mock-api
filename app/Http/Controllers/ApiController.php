@@ -43,6 +43,8 @@ class ApiController extends Controller
 
         $endpoint->save();
 
+        \Cache::forget('group_endpoints');
+
         return response()->json(['success' => true]);
     }
 
@@ -58,7 +60,13 @@ class ApiController extends Controller
 
     public function search(Request $request)
     {
+        $endpoints = Endpoint::query();
 
+        if ($request->get('url')) {
+            $endpoints->where('url', $request->get('url'));
+        }
+
+        return response()->json($endpoints->get());
     }
 
     public function customRoute(Request $request)

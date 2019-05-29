@@ -20,7 +20,9 @@ class RouteMiddleware
 
         $router = app()->make('router');
 
-        $group_endpoints = Endpoint::get()->groupBy(['url', 'method', 'status']);
+        $group_endpoints = \Cache::rememberForever('group_endpoints', function () {
+            return Endpoint::get()->groupBy(['url', 'method', 'status']);
+        });
 
         foreach ($group_endpoints as $url => $method_endpoints) {
             foreach ($method_endpoints as $method => $endpoints) {
